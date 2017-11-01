@@ -1,0 +1,763 @@
+<project name="CXF Web Service Clients" basedir="." default="all">
+	
+	<!-- Global properties -->
+	<property name="ReusableWebServiceClientsProjectDir" value="../../ReusableWebServiceClients"/>
+	<property name="workspace.dir" value="${ReusableWebServiceClientsProjectDir}"/>
+	<property name="generated.source.location" location="${ReusableWebServiceClientsProjectDir}/src/main/java" />
+	<property name="package.prefix" value="com.amfam.billing.reuse"/>
+	<property name="package.folder" value="com/amfam/billing/reuse"/>
+
+	<!-- ************************************************************************************* -->
+
+	<target name="all" description="Rebuild all web service clients.">
+		<!-- 	<antcall target="AgentService.build"/>
+		<antcall target="AgentSidebarService.build"/>
+		<antcall target="BookOfBusinessService.build"/>
+		<antcall target="GeoDataService.build"/> 
+		<antcall target="LifeDataService.build"/> -->
+		<!-- <antcall target="WTMTaskComplete.build" />
+		<antcall target="ThirdPartyInfo.build" />
+		<antcall target="LUCAGTW4.build" />
+		<antcall target="AMCI0500.build" /> 
+		<antcall target="ProductPortfolioService.build" />
+		<antcall target="ProducerTransitionService.build" />
+		<antcall target="PartyHelperService.build" />
+		<antcall target="GWBillAccountService.build" /> -->
+		<antcall target="ProducerHierarchyService.build"/>  
+		<!-- <antcall target="ProducerService.build"></antcall> 
+		<antcall target="PaymentDocumentService.build"/> 
+		<antcall target="EnvelopeFormattingService.build"/>
+		<antcall target="RecoveryReconciliationAPIService.build"/>		
+		<antcall target="MyAccountXrefService.build"/>
+		<antcall target="PolicyService.build"/> -->
+		<!-- <antcall target="BrokerageAccountService.build"/> -->
+
+	</target>
+
+	<!-- 
+	   ***********************************************************************************************
+	   To automate building a new CICS web service client, perform the following three edits:
+	   1. Add a new property identifying the WSDL location of the new cics web service.
+	   2. Define a new target to build the new cics web service client.  Copy an existing target 
+	      (e.g., WTMTaskComplete.build) specifying the program.name, wsdl.location request.namespace and
+	      response.namespace. The generated web service client classes will be created in a package
+	      with the name com.amfam.billing.reuse.dataaccess.cics.<program.name>, with subpackages for
+	      the request and response classes.
+	   3. Add a step to the target "all" to build the new cics web service client by copying one of 
+	      the existing <antcall> statements and changing the target. 
+	   
+	   At this point, you can run just the target you created in step (2) to generate the new cics web 
+	   service client or run the "all" target to regenerate all CXF web service clients.
+	   ***********************************************************************************************
+	-->
+
+	<!-- Properties defining the location of each WSDL to generate a client for -->
+	<property name="WTMTaskComplete.wsdl.location" value="${ReusableWebServiceClientsProjectDir}/wsdl/WTMTaskCompleteService/WTMTaskCompleteService.wsdl" />
+	<property name="ThirdPartyInfoService.wsdl.location" value="${ReusableWebServiceClientsProjectDir}/wsdl/ThirdPartyInfoService/ThirdPartyInfoService.wsdl" />
+	<property name="LUCAGTW4.wsdl.location" value="${ReusableWebServiceClientsProjectDir}/wsdl/LiGetAgencyDataService.wsdl" />
+	<property name="AMCI0500.wsdl.location" value="${ReusableWebServiceClientsProjectDir}/wsdl/AmGetAgencyDataService.wsdl" />
+
+	<!-- ************************************************************************************* -->
+
+	<!-- Build WTMTaskComplete web service client and remove unnecessary generated files -->
+	<target name="WTMTaskComplete.build" description="Rebuild WTMTaskComplete web service client.">
+		<antcall target="generateWebServiceClient">
+			<param name="program.name" value="worktaskmanagement" />
+			<param name="wsdl.location" value="${WTMTaskComplete.wsdl.location}" />
+			<param name="request.namespace" value="http://www.USCI7014.USCB7014.Request.com" />
+			<param name="response.namespace" value="http://www.USCI7014.USCB7014.Response.com" />
+		</antcall>
+	</target>
+
+	<!-- Build ThirdPartyInfoService web service client and remove unnecessary generated files -->
+	<target name="ThirdPartyInfo.build" description="Rebuild ThirdPartyInfoService web service client.">
+		<antcall target="generateWebServiceClient">
+			<param name="program.name" value="thirdpartyinfo" />
+			<param name="wsdl.location" value="${ThirdPartyInfoService.wsdl.location}" />
+			<param name="request.namespace" value="http://www.CLCI3078.CLCITPIJ.Request.com" />
+			<param name="response.namespace" value="http://www.CLCI3078.CLCITPIJ.Response.com" />
+		</antcall>
+	</target>
+
+	<!-- Build AMCI0500 web service client and remove unnecessary generated files -->
+	<target name="AMCI0500.build" description="Rebuild AMCI0500 web service client.">
+		<antcall target="generateWebServiceClient">
+			<param name="program.name" value="amci0500" />
+			<param name="wsdl.location" value="${AMCI0500.wsdl.location}" />
+			<param name="request.namespace" value="http://www.AMCI0500.AMCA0500.Request.com" />
+			<param name="response.namespace" value="http://www.AMCI0500.AMCA0500.Response.com" />
+		</antcall>
+	</target>
+
+	<!-- Build LUCAGTW4  web service client and remove unnecessary generated files -->
+	<target name="LUCAGTW4.build" description="Rebuild LUCAGTW4 web service client.">
+		<antcall target="generateWebServiceClient">
+			<param name="program.name" value="LUCAGTW4" />
+			<param name="wsdl.location" value="${LUCAGTW4.wsdl.location}" />
+			<param name="request.namespace" value="http://www.LUCAGTW4.CUCAGTW4.Request.com" />
+			<param name="response.namespace" value="http://www.LUCAGTW4.CUCAGTW4.Response.com" />
+		</antcall>
+	</target>
+
+	<!-- ************************************************************************************* -->
+
+	<property name="AgentService.wsdl.location" value="http://devbp20/AgentServicev4/services/AgentService?wsdl" />
+	<property name="AgentService.service.package" value="agent" />
+	<target name="AgentService.build" description="Builds the AgentService web service client">
+		<echo message="**************** Generating web service client for WSDL: ${AgentService.wsdl.location}"/>
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+			<arg value="-verbose"/>
+			<arg value="-p"/>
+			<arg value="${package.prefix}.agent.client"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/enterprise=${package.prefix}.agent.schema.enterprise.v4"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/ping=${package.prefix}.agent.schema.ping.v4"/>
+			<arg value="-p"/>
+			<arg value="http://service.amfam.com/agentservice=${package.prefix}.agent.agentservice.v4"/>
+			<arg value="-d" />
+			<arg value="${generated.source.location}" />
+			<arg value="-client" />
+			<arg value="${AgentService.wsdl.location}" />
+			<classpath>
+				<path refid="cxf.classpath" />
+			</classpath>
+		</java>
+		<delete verbose="true">
+				<fileset dir="${generated.source.location}/${package.folder}/agent" >
+			  		<include name="**/*_Client.java"/>
+			  		<include name="**/*_Service.java"/>
+				</fileset>
+		</delete>
+	</target>
+
+	
+	<!-- ************************************************************************************* -->
+
+	<property name="AgentSidebarService.wsdl.location" value="${workspace.dir}/wsdl/AgentSidebarService/AgentSidebarNavigationService.wsdl" />
+	<property name="AgentSidebarService.service.package" value="agentsidebar" />
+	<target name="AgentSidebarService.build" description="Builds the AgentSidebarService web service client">
+		<echo message="**************** Generating web service client for WSDL: ${AgentSidebarService.wsdl.location}"/>
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+			<arg value="-verbose"/>
+			<arg value="-p"/>
+			<arg value="${package.prefix}.agentsidebar.client"/>
+			<arg value="-d" />
+			<arg value="${generated.source.location}" />
+			<arg value="-client" />
+			<arg value="${AgentSidebarService.wsdl.location}" />
+			<classpath>
+				<path refid="cxf.classpath" />
+			</classpath>
+		</java>
+		<delete verbose="true">
+				<fileset dir="${generated.source.location}/${package.folder}/agentsidebar" >
+			  		<include name="**/*_Client.java"/>
+			  		<include name="**/*_Service.java"/>
+				</fileset>
+		</delete>
+	</target>
+	
+	
+	<!-- ************************************************************************************* -->
+
+	<property name="BookOfBusinessService.wsdl.location" value="${workspace.dir}/wsdl/BookOfBusinessService/BookOfBusinessService.wsdl" />
+	<property name="BookOfBusinessService.service.package" value="bookofbusiness" />
+	<target name="BookOfBusinessService.build" description="Builds the BookOfBusinessService web service client">
+		<echo message="**************** Generating web service client for WSDL: ${BookOfBusinessService.wsdl.location}"/>
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+			<arg value="-verbose"/>
+			<arg value="-p"/>
+			<arg value="${package.prefix}.bookofbusiness.client"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/bob/authorizedAgency/v1=${package.prefix}.bookofbusiness.schema.message.authorizedagency.v1"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/bob/bobFault/v1=${package.prefix}.bookofbusiness.schema.message.bobfault.v1"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/bob/error/v1=${package.prefix}.bookofbusiness.schema.message.error.v1"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/bob/hasBookOfBusinessAccess/v1=${package.prefix}.bookofbusiness.schema.message.hasbookofbusinessaccess.v1"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/bob/hasBookOfBusinessAccessResponse/v1=${package.prefix}.bookofbusiness.schema.message.hasbookofbusinessaccessresponse.v1"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/xsd/automation/Ping/v1=${package.prefix}.bookofbusiness.schema.automation.ping.v1"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/bob/retrieveBookOfBusiness/v1=${package.prefix}.bookofbusiness.schema.message.retrievebookofbusiness.v1"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/bob/retrieveBookOfBusinessResponse/v1=${package.prefix}.bookofbusiness.schema.message.retrievebookofbusinessresponse.v1"/>
+			<arg value="-d" />
+			<arg value="${generated.source.location}" />
+			<arg value="-client" />
+			<arg value="${BookOfBusinessService.wsdl.location}" />
+			<classpath>
+				<path refid="cxf.classpath" />
+			</classpath>
+		</java>
+		<delete verbose="true">
+				<fileset dir="${generated.source.location}/${package.folder}/bookofbusiness" >
+			  		<include name="**/*_Client.java"/>
+			  		<include name="**/*_Service.java"/>
+				</fileset>
+		</delete>
+	</target>
+	
+	
+	<!-- ************************************************************************************* -->
+
+	<property name="GeoDataService.wsdl.location" value="http://devd14/geodatav2/wsdl/GeoDataService.wsdl" />
+	<property name="GeoDataService.service.package" value="geodata" />
+	<!-- Build GeoDataService web service client -->
+	<target name="GeoDataService.build" description="Builds the GeoDataService web service client">
+		<echo message="**************** Generating web service client for WSDL: ${GeoDataService.wsdl.location}"/>
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+			<arg value="-verbose"/>
+			<arg value="-p"/>
+			<arg value="${package.prefix}.geodata.client"/>
+	<!--	<arg value="-p"/>
+			<arg value="http://schema.amfam.com/xsd/automation/Ping/v1=${package.prefix}.geodata.schema.automation.ping.v1"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/xsd/enterprise/geodataservice/v1=${package.prefix}.geodata.schema.enterprise.geodataservice.v1"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/xsd/message/geodataservice/v1=${package.prefix}.geodata.schema.message.geodataservice.v1"/> -->
+			<arg value="-d" />
+			<arg value="${generated.source.location}" />
+			<arg value="-client" />
+			<arg value="${GeoDataService.wsdl.location}" />
+			<classpath>
+				<path refid="cxf.classpath" />
+			</classpath>
+		</java>
+		<delete verbose="true">
+				<fileset dir="${generated.source.location}/${package.folder}/geodata" >
+			  		<include name="**/*_Client.java"/>
+			  		<include name="**/*_Service.java"/>
+				</fileset>
+		</delete>
+	</target>
+
+	<!-- ************************************************************************************* -->
+
+	<property name="LifeDataService.wsdl.location" value="${workspace.dir}/wsdl/LifeDataService/LifeDataService.wsdl" />
+		<property name="LifeDataService.service.package" value="lifedata" />
+		<target name="LifeDataService.build" description="Builds the LifeDataService web service client">
+			<echo message="**************** Generating web service client for WSDL: ${LifeDataService.wsdl.location}"/>
+			<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+				<arg value="-verbose"/>
+				<arg value="-p"/>
+				<arg value="${package.prefix}.lifedata.client"/>
+				<arg value="-p"/>
+
+				<arg value="http://schema.lfwebsrvc.amfam.com/xsd/automation/LifeDataFaultType/v7=${package.prefix}.lifedata.schema.automation.lifedatafaulttype.v7"/>
+
+				<arg value="-p"/>
+
+				<arg value="http://schema.lfwebsrvc.amfam.com/xsd/automation/SearchNewBusiness/v7=${package.prefix}.lifedata.schema.automation.searchnewbusiness.v7"/>
+				<arg value="-p"/>
+
+				<arg value="http://schema.lfwebsrvc.amfam.com/xsd/automation/ping/v7=${package.prefix}.lifedata.schema.automation.ping.v7"/>
+
+				<arg value="-p"/>
+
+				<arg value="http://schema.lfwebsrvc.amfam.com/xsd/automation/RetrievePaymentEligibility/v7=${package.prefix}.lifedata.schema.automation.retrievepaymenteligibility.v7"/>
+
+				<arg value="-p"/>
+
+				<arg value="http://schema.lfwebsrvc.amfam.com/xsd/automation/RetrievePolicyData/v7=${package.prefix}.lifedata.schema.automation.retrievepolicydata.v7"/>
+				
+				<arg value="-p"/>
+
+				<arg value="http://schema.lfwebsrvc.amfam.com/xsd/automation/PolicyListData/v7=${package.prefix}.lifedata.schema.automation.policylistdata.v7"/>
+
+				<arg value="-p"/>
+
+				<arg value="http://schema.lfwebsrvc.amfam.com/xsd/automation/SearchPolicyData/v7=${package.prefix}.lifedata.schema.automation.searchpolicydata.v7"/>
+
+				<arg value="-p"/>
+
+				<arg value="http://schema.lfwebsrvc.amfam.com/xsd/automation/pingmessage/v7=${package.prefix}.lifedata.schema.message.ping.v7"/>
+
+				<arg value="-d" />
+				<arg value="${generated.source.location}" />
+				<arg value="-client" />
+				<arg value="${LifeDataService.wsdl.location}" />
+				<classpath>
+					<path refid="cxf.classpath" />
+				</classpath>
+			</java>
+			<delete verbose="true">
+					<fileset dir="${generated.source.location}/${package.folder}/lifedata" >
+				  		<include name="**/*_Client.java"/>
+				  		<include name="**/LifeDataService.java"/>
+					</fileset>
+			</delete>
+		</target>
+
+	<!-- ************************************************************************************* -->
+	
+	<property name="ProducerHierarchyService.wsdl.location" value="${workspace.dir}/wsdl/ProducerHierarchyService/ProducerHierarchyService.wsdl" />
+			<property name="ProducerHierarchyService.service.package" value="ProducerHierarchyService" />
+			<target name="ProducerHierarchyService.build" description="Builds the ProducerHierarchyService web service client">
+				<echo message="**************** Generating web service client for WSDL: ${ProductPortfolioService.wsdl.location}"/>
+				<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+					<arg value="-verbose"/>
+					<arg value="-p"/>
+					<arg value="${package.prefix}.producerhierarchy"/>
+					<arg value="-p"/>
+					<arg value="http://service.amfam.com/automation/producerhierarchyservice=${package.prefix}.producerhierarchy.automation.service"/>
+					<arg value="-p"/>
+					<arg value="http://service.amfam.com/message/producerhierarchyservice=${package.prefix}.producerhierarchy.message.service"/>
+					<arg value="-p"/>
+					<arg value="http://schema.amfam.com/domain/producer=${package.prefix}.producerhierarchy.schema.domain.producer"/>
+					<arg value="-p"/>
+					<arg value="http://schema.amfam.com/ping=${package.prefix}.producerhierarchy.schema.ping"/>
+					<arg value="-p"/>
+					<arg value="http://schema.amfam.com/xsd/enterpriseType/v1=${package.prefix}.producerhierarchy.schema.xsd.enterprisetype.v1"/>
+					<arg value="-p"/>
+					<arg value="http://service.amfam.com/producerhierarchyservice/v3=${package.prefix}.producerhierarchy.service.v3"/>
+					<arg value="-d" />
+					<arg value="${generated.source.location}" />
+					<arg value="-client" />
+					<arg value="${ProducerHierarchyService.wsdl.location}" />
+					<classpath>
+						<path refid="cxf.classpath" />
+					</classpath>
+				</java>
+				<delete verbose="true">
+						<fileset dir="${generated.source.location}/${package.folder}/productportfolio" >
+					  		<include name="**/*_Client.java"/>
+					  		<include name="**/*_Service.java"/>
+						</fileset>
+				</delete>
+			</target>	
+		
+	<!-- ************************************************************************************* -->
+
+	<property name="ProductPortfolioService.wsdl.location" value="https://devbm25n-vip.amfam.com/cpproductservicev05/services/ProductPortfolioService?wsdl" />
+	<property name="ProductPortfolioService.service.package" value="productportfolio" />
+	<target name="ProductPortfolioService.build" description="Builds the ProductPortfolioService web service client">
+		<echo message="**************** Generating web service client for WSDL: ${ProductPortfolioService.wsdl.location}"/>
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+			<arg value="-verbose"/>
+			<arg value="-p"/>
+			<arg value="${package.prefix}.productportfolio.client"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/ping=${package.prefix}.productportfolio.schema.automation.ping"/>
+			<arg value="-p"/>
+			<arg value="http://service.amfam.com/productportfolioservice=${package.prefix}.productportfolio.schema.automation.productportfolio"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/ping=${package.prefix}.productportfolio.schema.message.ping"/>
+			<arg value="-p"/>
+			<arg value="http://service.amfam.com/productportfolioservice=${package.prefix}.productportfolio.schema.message.productportfolio"/>
+			<arg value="-d" />
+			<arg value="${generated.source.location}" />
+			<arg value="-client" />
+			<arg value="${ProductPortfolioService.wsdl.location}" />
+			<classpath>
+				<path refid="cxf.classpath" />
+			</classpath>
+		</java>
+		<delete verbose="true">
+				<fileset dir="${generated.source.location}/${package.folder}/productportfolio" >
+			  		<include name="**/*_Client.java"/>
+			  		<include name="**/*_Service.java"/>
+				</fileset>
+		</delete>
+	</target>	
+	
+	<property name="ProducerTransitionService.wsdl.location" value="http://accbk20/ProducerTransV2Service02/wsdlv5/ProducerTransitionService.wsdl" />
+		<property name="ProducerTransitionService.service.package" value="producertransition" />
+		<target name="ProducerTransitionService.build" description="Builds the ProducerTransitionService web service client">
+			<echo message="**************** Generating web service client for WSDL: ${ProducerTransitionService.wsdl.location}"/>
+			<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+				<arg value="-verbose"/>
+				<arg value="-p"/>
+				<arg value="${package.prefix}.producertransition.client"/>
+				<arg value="-p"/>
+				<arg value="http://schema.amfam.com/ping=${package.prefix}.producertransition.schema.automation.ping"/>
+				<arg value="-p"/>
+				<arg value="http://service.amfam.com/producertransition/v5=${package.prefix}.producertransition.schema.automation"/>
+				<arg value="-p"/>
+				<arg value="http://schema.amfam.com/ping=${package.prefix}.producertransition.schema.message.ping"/>
+				<arg value="-p"/>
+				<arg value="http://service.amfam.com/message/producertransitionservice=${package.prefix}.producertransition.schema.message"/>
+				<arg value="-d" />
+				<arg value="${generated.source.location}" />
+				<arg value="-client" />
+				<arg value="${ProducerTransitionService.wsdl.location}" />
+				<classpath>
+					<path refid="cxf.classpath" />
+				</classpath>
+			</java>
+			<delete verbose="true">
+					<fileset dir="${generated.source.location}/${package.folder}/producertransition" >
+				  		<include name="**/*_Client.java"/>
+				  		<include name="**/*_Service.java"/>
+					</fileset>
+			</delete>
+		</target>
+	
+	<property name="PolicyService.wsdl.location" value="https://intbh20g.amfam.com/policyserviceV6_i01/wsdl/policyservice.wsdl" />
+		<property name="PolicyService.service.package" value="policyservice" />
+		<target name="PolicyService.build" description="Builds the PolicyService web service client">
+			<echo message="**************** Generating web service client for WSDL: ${PolicyService.wsdl.location}"/>
+			<echo message="**************** PolicyService path : ${generated.source.location}/com/amfam/service/policyservice/v6"/>
+			<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">					
+				<arg value="-server" />
+				<arg value="-b"/>
+				<arg value="policyServiceCustomizations.xml"/>
+				<arg value="-d" />
+				<arg value="${generated.source.location}" />
+				<arg value="-client" />
+				<arg value="${PolicyService.wsdl.location}" />
+				<classpath>
+					<path refid="cxf.classpath" />
+				</classpath>
+			</java>
+			<!--Delete PolicyService_PolicyServiceSOAP_Client.java. PolicyService_PolicyServiceSOAP_Service.java, 
+						PolicyService_PolicyServiceSOAP_Server.java -->
+			<delete verbose="true">				
+				<fileset dir="${generated.source.location}/com/amfam/service/policyservice/v6" >
+					<include name="**/*_Client.java"/> 
+			  		<include name="**/*_Service.java"/>
+					<include name="**/*_Server.java"/>
+				</fileset>
+			</delete>	
+			<!--Delete org folder from src/main/java 
+			<delete dir="${generated.source.location}/org"/>-->
+		</target>	
+	
+	
+	<property name="MyAccountXrefService.wsdl.location" value="https://myaccountxrefv1b03service-int.application.amfam.com/myaccountxrefv1b03service/services/MyAccountXrefService?wsdl" />
+				<property name="MyAccountXrefService.service.package" value="myaccountxrefservice" />
+				<target name="MyAccountXrefService.build" description="Builds the MyAccountXrefService web service client">
+					<echo message="**************** Generating web service client for WSDL: ${MyAccountXrefService.wsdl.location}"/>
+						<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+							<arg value="-verbose"/>
+							<arg value="-p"/>
+							<arg value="${package.prefix}.myaccountxrefservice.client"/>
+							<arg value="-p"/>
+							<arg value="http://schema.amfam.com/ping=${package.prefix}.myaccountxrefservice.schema.automation.ping"/>
+							<arg value="-p"/>
+							<arg value="http://service.amfam.com/myaccountxrefservice/=${package.prefix}.myaccountxrefservice.schema.automation"/>
+							<arg value="-p"/>
+							<arg value="http://schema.amfam.com/ping=${package.prefix}.myaccountxrefservice.schema.message.ping"/>
+							<arg value="-p"/>
+							<arg value="http://service.amfam.com/message/myaccountxrefservice=${package.prefix}.myaccountxrefservice.schema.message"/>
+							<arg value="-d" />
+							<arg value="${generated.source.location}" />
+							<arg value="-client" />
+							<arg value="${MyAccountXrefService.wsdl.location}" />
+							<classpath>
+								<path refid="cxf.classpath" />
+							</classpath>
+						</java>
+						<delete verbose="true">
+							<fileset dir="${generated.source.location}/${package.folder}/myaccountxrefservice/client" >
+							 		<include name="**/*_Client.java"/>
+							 		<include name="**/*_Service.java"/>
+							</fileset>
+						</delete>			
+				</target>
+	
+	
+	<property name="RecoveryReconciliationAPIService.wsdl.location" value="https://devao80g.amfam.com/cc/ws/amfam/cc/financials/recoveryreconciliation/service/RecoveryReconciliationAPI?wsdl" />
+			<property name="RecoveryReconciliationAPIService.service.package" value="recoveryReconciliationAPI" />
+			<target name="RecoveryReconciliationAPIService.build" description="Builds the RecoveryReconciliationAPIService web service client">
+				<echo message="**************** Generating web service client for WSDL: ${RecoveryReconciliationAPIService.wsdl.location}"/>
+				<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">					
+					<arg value="-verbose"/>
+					<arg value="-p"/>
+					<arg value="${package.prefix}.RecoveryReconciliationAPIService.client"/>
+					<arg value="-d" />
+					<arg value="${generated.source.location}" />
+					<arg value="-client" />
+					<arg value="${RecoveryReconciliationAPIService.wsdl.location}" />
+					<classpath>
+						<path refid="cxf.classpath" />
+					</classpath>
+				</java>
+				<delete verbose="true">
+					<fileset dir="${generated.source.location}/${package.folder}/RecoveryReconciliationAPIService" >
+				  		<include name="**/*_Client.java"/>
+				  		<include name="**/*_Service.java"/>
+					</fileset>
+				</delete>					
+			</target>
+	
+	
+	<property name="PartyHelperService.wsdl.location" value="http://intad20g.amfam.com/partyhelperservice04a/PartyHelperService.wsdl" />
+			<property name="PartyHelperService.service.package" value="partyhelper" />
+			<target name="PartyHelperService.build" description="Builds the PartyHelperService web service client">
+				<echo message="**************** Generating web service client for WSDL: ${PartyHelperService.wsdl.location}"/>
+				<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+					<arg value="-verbose"/>
+					<arg value="-p"/>
+					<arg value="http://service.amfam.com/partyhelperservice=${package.prefix}.partyhelper.generated"/>
+					<arg value="-p"/>
+					<arg value="http://service.amfam.com/partyhelperservice/v4=${package.prefix}.partyhelper.generated"/>
+					<arg value="-d" />
+					<arg value="${generated.source.location}" />
+					<arg value="-client" />
+					<arg value="${PartyHelperService.wsdl.location}" />
+					<classpath>
+						<path refid="cxf.classpath" />
+					</classpath>
+				</java>
+				<delete verbose="true">
+						<fileset dir="${generated.source.location}/${package.folder}/partyhelper" >
+					  		<include name="**/*_Client.java"/>
+					  		<include name="**/*_Service.java"/>
+						</fileset>
+				</delete>
+			</target>
+	
+	<property name="GWBillAccountService.wsdl.location" value="https://devah80g.amfam.com/bc/ws/amfam/webservice/billacctservice/BillAccountService?wsdl" />
+				<property name="GWBillAccountService.service.package" value="gwbillaccount" />
+				<target name="GWBillAccountService.build" description="Builds the GW Bill Account Service web service client">
+					<echo message="**************** Generating web service client for WSDL: ${GWBillAccountService.wsdl.location}"/>
+					<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+						<arg value="-verbose"/>
+						<arg value="-p"/>
+						<arg value="http://amfam.com/bc/ws/gw/webservice/billacctservice/BillAccountService=${package.prefix}.gwbillaccount.client"/>
+						<arg value="-p"/>
+						<arg value="http://amfam.com/bc/ws/gw/webservice/billacctservice/BillAccountServiceData=${package.prefix}.gwbillaccount.client"/>
+						<arg value="-p"/>
+						<arg value="http://amfam.com/bc/ws/amfam/schema/entity/BillAccountServiceData=${package.prefix}.gwbillaccount.client"/>
+						<arg value="-p"/>
+						<arg value="http://guidewire.com/amfam/webservice/ping=${package.prefix}.gwbillaccount.client.automation.ping"/>
+						<arg value="-p"/>
+						<arg value="http://guidewire.com/bc/typekey=${package.prefix}.gwbillaccount.client.typekey"/>
+						<arg value="-p"/>
+						<arg value="http://guidewire.com/bc/ws/gw/webservice/ping=${package.prefix}.gwbillaccount.client.ping"/>
+						<arg value="-p"/>
+						<arg value="http://guidewire.com/bc/ws/gw/webservice/pingResult=${package.prefix}.gwbillaccount.client.pingresult"/>
+						<arg value="-p"/>
+						<arg value="http://guidewire.com/ws/soapheaders=${package.prefix}.gwbillaccount.client.soapheaders"/>
+						<arg value="-d" />
+						<arg value="${generated.source.location}" />
+						<arg value="-client" />
+						<arg value="${GWBillAccountService.wsdl.location}" />
+						<classpath>
+							<path refid="cxf.classpath" />
+						</classpath>
+					</java>
+					<delete verbose="true">
+							<fileset dir="${generated.source.location}/${package.folder}/gwbillaccount" >
+						  		<include name="**/*_Client.java"/>
+						  		<include name="**/*_Service.java"/>
+							</fileset>
+					</delete>
+				</target>
+	
+	<property name="ProducerService.wsdl.location" value="http://accbk20/ProducerV3Service02/wsdlv5/ProducerService.wsdl" />
+	<property name="ProducerService.service.package" value="producerservice" />
+	<target name="ProducerService.build" description="Builds the ProducerService web service client">
+	     <echo message="**************** Generating web service client for WSDL: ${ProducerService.wsdl.location}"/>
+	     <java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+		   <arg value="-verbose"/>
+		   <arg value="-p"/>
+		   <arg value="http://schema.amfam.com/domain/producer=${package.prefix}.producerservice.domain.client.producer"/>
+		   <arg value="-p"/>
+		   <arg value="http://service.amfam.com/automation/producerservice/v5=${package.prefix}.producerservice.v5.automation.client"/>
+		   <arg value="-p"/>
+			<arg value="http://service.amfam.com/message/producerservice/v5=${package.prefix}.producerservice.client.v5.message"/>
+		     <arg value="-p"/>
+			<arg value="http://service.amfam.com/producerservice/v5=${package.prefix}.producerservice.v5.client"/>
+			<arg value="-p"/>
+			<arg value="http://schema.amfam.com/ping=${package.prefix}.producerservice.client.ping"/>
+		   <arg value="-d" />
+		   <arg value="${generated.source.location}" />
+		   <arg value="-client" />
+		   <arg value="${ProducerService.wsdl.location}" />
+		   <classpath>
+			 <path refid="cxf.classpath" />
+		   </classpath>
+	     </java>
+	     <delete verbose="true">
+			 <fileset dir="${generated.source.location}/${package.folder}/producerservice" >
+			       <include name="**/*_Client.java"/>
+			       <include name="**/*_Service.java"/>
+			 </fileset>
+	     </delete>
+	</target>
+
+	<!-- Payment Document Service Client Stubs Generation-->
+		<property name="PaymentDocumentService.wsdl.location" value="${workspace.dir}/wsdl/PaymentDocumentService/PaymentDocumentService.wsdl" />
+				<property name="PaymentDocumentService.service.package" value="paymentdocument" />
+				<target name="PaymentDocumentService.build" description="Builds the PaymentDocumentService web service client">
+					<echo message="**************** Generating web service client for WSDL: ${PaymentDocumentService.wsdl.location}"/>
+					<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+						<arg value="-verbose"/>
+						<arg value="-p"/>
+						<arg value="${package.prefix}.paymentdocument.client"/>
+						<arg value="-p"/>
+						<arg value="http://schema.amfam.com/ping=${package.prefix}.paymentdocument.schema.automation.ping"/>
+						<arg value="-p"/>
+						<arg value="http://service.amfam.com/paymentsdocumentservice=${package.prefix}.paymentdocument.schema.automation"/>
+						<arg value="-p"/>
+						<arg value="http://schema.amfam.com/ping=${package.prefix}.paymentdocument.schema.message.ping"/>
+						<arg value="-p"/>
+						<arg value="http://service.amfam.com/message/paymentsdocumentservice=${package.prefix}.paymentdocument.schema.message"/>
+						
+						<arg value="-d" />
+						<arg value="${generated.source.location}" />
+						<arg value="-client" />
+						<arg value="${PaymentDocumentService.wsdl.location}" />
+						<classpath>
+							<path refid="cxf.classpath" />
+						</classpath>
+					</java>
+					<delete verbose="true">
+							<fileset dir="${generated.source.location}/${package.folder}/paymentdocument" >
+						  		<include name="**/*_Client.java"/>
+						  		<include name="**/*_Service.java"/>
+							</fileset>
+					</delete>
+				</target>
+	
+	<!-- EnvelopeFormatting Service Client Stubs Generation-->
+			<property name="EnvelopeFormattingService.wsdl.location" value="${workspace.dir}/wsdl/EnvelopeFormattingService/EnvelopeFormattingService.wsdl" />
+					<property name="EnvelopeFormattingService.service.package" value="envelopeformatting" />
+					<target name="EnvelopeFormattingService.build" description="Builds the EnvelopeFormattingService web service client">
+						<echo message="**************** Generating web service client for WSDL: ${EnvelopeFormattingService.wsdl.location}"/>
+						<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+							<arg value="-verbose"/>
+							<arg value="-p"/>
+							<arg value="${package.prefix}.envelopeformatting.client"/>
+							
+							<arg value="-d" />
+							<arg value="${generated.source.location}" />
+							<arg value="-client" />
+							<arg value="${EnvelopeFormattingService.wsdl.location}" />
+							<classpath>
+								<path refid="cxf.classpath" />
+							</classpath>
+						</java>
+						<delete verbose="true">
+								<fileset dir="${generated.source.location}/${package.folder}/envelopeformatting" >
+							  		<include name="**/*_Client.java"/>
+							  		<include name="**/*_Service.java"/>
+								</fileset>
+						</delete>
+					</target>
+	
+	
+
+	
+	
+	<!-- ************************************************************************************* -->
+		
+	<!-- ************************************************************************************* -->
+
+		<property name="BrokerageAccountService.wsdl.location" value="${workspace.dir}/wsdl/BrokerageAccountService/BrokerageAccountService.wsdl" />
+			<property name="BrokerageAccountService.service.package" value="brokerage" />
+			<target name="BrokerageAccountService.build" description="Builds the BrokerageAccountService web service client">
+				<echo message="**************** Generating web service client for WSDL: ${BrokerageAccountService.wsdl.location}"/>
+				<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+					<arg value="-verbose"/>
+					<arg value="-p"/>
+					<arg value="${package.prefix}.brokerage.client"/>
+					<arg value="-p"/>
+					<arg value="http://schema.amfam.com/message/brokerage/v1=${package.prefix}.brokerage.schema.brokerageservice.v1"/>
+					<arg value="-p"/>
+					<arg value="http://schema.amfam.com/ping=${package.prefix}.brokerage.schema.message.ping.v1"/>
+				
+					<arg value="-d" />
+					<arg value="${generated.source.location}" />
+					<arg value="-client" />
+					<arg value="${BrokerageAccountService.wsdl.location}" />
+					<classpath>
+						<path refid="cxf.classpath" />
+					</classpath>
+				</java>
+				<delete verbose="true">
+						<fileset dir="${generated.source.location}/${package.folder}/brokerage" >
+							<include name="**/*_Client.java"/>
+							<include name="**/*_Service.java"/>
+						</fileset>
+				</delete>
+			</target>
+
+		<!-- ************************************************************************************* -->
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- The CXF libraries are available in your build project so you dont need to change this -->
+	<property name="cxf.home" location="." />
+	
+	<!-- Sets up the classpath to run the ANT task -->
+	<path id="cxf.classpath">
+		<fileset dir="${cxf.home}/modules">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${cxf.home}/integration">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${cxf.home}/dependencies">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="C:/Program Files (x86)/Java/jdk1.6.0_30/jre/lib">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="C:/Program Files (x86)/Java/jdk1.6.0_30/jre/lib/ext">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="C:/JBoss/jboss-eap-5.2.0.GA-A/client">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Generates the CICS web service client and then removes unnecessary generated files -->
+	<target name="generateWebServiceClient" description="Internal Target; DO NOT RUN">
+		<antcall target="wsdl2java">
+			<param name="wsdl.location" value="${wsdl.location}" />
+			<param name="program.name" value="${program.name}" />
+			<param name="request.namespace" value="${request.namespace}" />
+			<param name="response.namespace" value="${response.namespace}" />
+		</antcall>
+		<antcall target="deleteUnnecessaryWebServiceClientFiles">
+			<param name="package" value="${generated.source.location}/${package.folder}/${program.name}" />
+		</antcall>
+	</target>
+
+	<!-- Runs the wsdl2java program to generate artifacts -->
+	<target name="wsdl2java" description="Internal Target; DO NOT RUN">
+		<echo message="**************** Generating CICS web service client for WSDL: ${wsdl.location}" />
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+			<arg value="-verbose" />
+			<arg value="-p" />
+			<arg value="${package.prefix}.${program.name}.client" />
+			<arg value="-p" />
+			<arg value="${request.namespace}=${package.prefix}.${program.name}.request" />
+			<arg value="-p" />
+			<arg value="${response.namespace}=${package.prefix}.${program.name}.response" />
+			<arg value="-d" />
+			<arg value="${generated.source.location}" />
+			<arg value="-client" />
+			<arg value="${wsdl.location}" />
+			<classpath>
+				<path refid="cxf.classpath" />
+			</classpath>
+		</java>
+	</target>
+
+	<!-- Delete the unnecessary CICS web service client generated files. -->
+	<target name="deleteUnnecessaryWebServiceClientFiles" description="Internal Target; DO NOT RUN">
+		<echo message="**************** Cleaning up unnecessary generated files at ${package}." />
+		<delete verbose="true">
+			<fileset dir="${package}">
+				<include name="**/*_Client.java" />
+				<include name="**/*Service.java" />
+			</fileset>
+		</delete>
+	</target>
+
+</project>
