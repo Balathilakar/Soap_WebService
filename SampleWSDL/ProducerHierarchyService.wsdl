@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.amfam.com/producerhierarchyservice/v3" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:message="http://service.amfam.com/message/producerhierarchyservice" xmlns:ping="http://schema.amfam.com/ping" name="ProducerHierarchyService" targetNamespace="http://service.amfam.com/producerhierarchyservice/v3">
+	<!--
+		dcmVersion=${stock.version}
+		gitCommit=${env.GIT_COMMIT}
+		gitBranch=${env.GIT_BRANCH}
+		buildId=${env.BUILD_ID}
+		buildNumber=${env.BUILD_NUMBER}
+		projectVersion=${project.version}
+		projectProfiles=${project.activeProfiles}
+		tier=${tier}
+		pillar=${pillar}
+	-->
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://service.amfam.com/producerhierarchyservice/v3" xmlns:tns="http://service.amfam.com/producerhierarchyservice/v3">
+			<xsd:import schemaLocation="schema/Message_ProducerHierarchyService.xsd" namespace="http://service.amfam.com/message/producerhierarchyservice"/>
+			<xsd:import schemaLocation="schema/Message_Ping.xsd" namespace="http://schema.amfam.com/ping"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="retrieveProducerHierarchyStructureRequest">
+		<wsdl:part name="retrieveProducerHierarchyStructure" element="message:retrieveProducerHierarchyStructure"/>
+	</wsdl:message>
+	<wsdl:message name="retrieveProducerHierarchyStructureResponse">
+		<wsdl:part name="retrieveProducerHierarchyStructureResponse" element="message:retrieveProducerHierarchyStructureResponse"/>
+	</wsdl:message>
+	<wsdl:message name="hasBookOfBusinessRequest">
+		<wsdl:part name="hasBookOfBusiness" element="message:hasBookOfBusiness"/>
+	</wsdl:message>
+	<wsdl:message name="hasBookOfBusinessResponse">
+		<wsdl:part name="hasBookOfBusinessResponse" element="message:hasBookOfBusinessResponse"/>
+	</wsdl:message>
+	<wsdl:message name="retrieveStaffRequest">
+		<wsdl:part name="retrieveStaff" element="message:retrieveStaff"/>
+	</wsdl:message>
+	<wsdl:message name="retrieveStaffResponse">
+		<wsdl:part name="retrieveStaffResponse" element="message:retrieveStaffResponse"/>
+	</wsdl:message>
+	<wsdl:message name="retrieveBookOfBusinessRequest">
+		<wsdl:part name="retrieveBookOfBusiness" element="message:retrieveBookOfBusiness"/>
+	</wsdl:message>
+	<wsdl:message name="retrieveBookOfBusinessResponse">
+		<wsdl:part name="retrieveBookOfBusinessResponse" element="message:retrieveBookOfBusinessResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ProducerHierarchyServiceFault">
+		<wsdl:part name="producerHierarchyServiceFault" element="message:producerHierarchyServiceFault"/>
+	</wsdl:message>
+	<wsdl:message name="pingRequest">
+		<wsdl:part name="ping" element="ping:ping"/>
+	</wsdl:message>
+	<wsdl:message name="pingResponse">
+		<wsdl:part name="pingResponse" element="ping:pingResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="ProducerHierarchyServicePort">
+		<wsdl:operation name="retrieveProducerHierarchyStructure">
+			<wsdl:input name="retrieveProducerHierarchyStructureRequest" message="tns:retrieveProducerHierarchyStructureRequest"/>
+			<wsdl:output name="retrieveProducerHierarchyStructureResponse" message="tns:retrieveProducerHierarchyStructureResponse"/>
+			<wsdl:fault name="ProducerHierarchyServiceFault" message="tns:ProducerHierarchyServiceFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveStaff">
+			<wsdl:input name="retrieveStaffRequest" message="tns:retrieveStaffRequest"/>
+			<wsdl:output name="retrieveStaffResponse" message="tns:retrieveStaffResponse"/>
+			<wsdl:fault name="ProducerHierarchyServiceFault" message="tns:ProducerHierarchyServiceFault"/>
+		</wsdl:operation>		
+		<wsdl:operation name="retrieveBookOfBusiness">
+			<wsdl:input name="retrieveBookOfBusinessRequest" message="tns:retrieveBookOfBusinessRequest"/>
+			<wsdl:output name="retrieveBookOfBusinessResponse" message="tns:retrieveBookOfBusinessResponse"/>
+			<wsdl:fault name="ProducerHierarchyServiceFault" message="tns:ProducerHierarchyServiceFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="hasBookOfBusiness">
+			<wsdl:input name="hasBookOfBusinessRequest" message="tns:hasBookOfBusinessRequest"/>
+			<wsdl:output name="hasBookOfBusinessResponse" message="tns:hasBookOfBusinessResponse"/>
+			<wsdl:fault name="ProducerHierarchyServiceFault" message="tns:ProducerHierarchyServiceFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="ping">
+			<wsdl:input name="pingRequest" message="tns:pingRequest"/>
+			<wsdl:output name="pingResponse" message="tns:pingResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ProducerHierarchyServiceHttpBinding" type="tns:ProducerHierarchyServicePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="retrieveProducerHierarchyStructure">
+			<soap:operation soapAction="http://service.amfam.com/producerhierarchyservice/retrieveProducerHierarchyStructure"/>
+			<wsdl:input name="retrieveProducerHierarchyStructureRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="retrieveProducerHierarchyStructureResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ProducerHierarchyServiceFault">
+				<soap:fault name="ProducerHierarchyServiceFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveStaff">
+			<soap:operation soapAction="http://service.amfam.com/producerhierarchyservice/retrieveStaff"/>
+			<wsdl:input name="retrieveStaffRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="retrieveStaffResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ProducerHierarchyServiceFault">
+				<soap:fault name="ProducerHierarchyServiceFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>		
+		<wsdl:operation name="retrieveBookOfBusiness">
+			<soap:operation soapAction="http://service.amfam.com/producerhierarchyservice/retrieveBookOfBusiness"/>
+			<wsdl:input name="retrieveBookOfBusinessRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="retrieveBookOfBusinessResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ProducerHierarchyServiceFault">
+				<soap:fault name="ProducerHierarchyServiceFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="hasBookOfBusiness">
+			<soap:operation soapAction="http://service.amfam.com/producerhierarchyservice/hasBookOfBusiness"/>
+			<wsdl:input name="hasBookOfBusinessRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="hasBookOfBusinessResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ProducerHierarchyServiceFault">
+				<soap:fault name="ProducerHierarchyServiceFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="ping">
+			<soap:operation soapAction="http://service.amfam.com/producerhierarchyservice/ping"/>
+			<wsdl:input name="pingRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="pingResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ProducerHierarchyService">
+		<wsdl:port name="ProducerHierarchyServiceHttpPort" binding="tns:ProducerHierarchyServiceHttpBinding">
+			<soap:address location="${producerhierarchyservicev3.esb.endpoint.url}"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
