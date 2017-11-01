@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schema.amfam.com/ping" targetNamespace="http://schema.amfam.com/ping" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<annotation>
+		<documentation xml:lang="en">
+			This schema defines the structure of a PingResultType
+		</documentation>
+	</annotation>
+	<complexType name="PingInputType">
+		<sequence>
+			<element name="PingLevel" type="tns:PingLevelType"/>
+		</sequence>
+	</complexType>
+	<complexType name="PingResultType">
+		<sequence>
+			<element name="Status" type="tns:StatusType" minOccurs="1"/>
+			<element name="message" type="string" nillable="true"/>
+			<element name="Verification" type="tns:VerificationType" minOccurs="0" maxOccurs="999"/>
+			<element name="timeTakenForPing" type="string" nillable="true"/>
+		</sequence>
+	</complexType>
+	<complexType name="VerificationType">
+		<sequence>
+			<element name="componentName" type="string"/>
+			<element name="Status" type="tns:StatusType" minOccurs="1"/>
+			<element name="message" type="string" nillable="true"/>
+			<element name="timeTakenForComponentVerification" type="string" minOccurs="1"/>
+		</sequence>
+	</complexType>
+	<simpleType name="PingLevelType">
+		<restriction base="string">
+			<enumeration value="NONE"/>
+			<enumeration value="COMPONENT"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="StatusType">
+		<restriction base="string">
+			<enumeration value="SUCCESS"/>
+			<enumeration value="FAILURE"/>
+		</restriction>
+	</simpleType>
+</schema>

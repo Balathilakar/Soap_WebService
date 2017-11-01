@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schema.amfam.com/xsd/enterpriseType/v1" targetNamespace="http://schema.amfam.com/xsd/enterpriseType/v1" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.0">
+	<annotation>
+		<documentation xml:lang="en">This schema is defined to store common Global Data Types (which can be complexType or simpleType) that can be used/referenced across multiple XML Schema Documents.</documentation>
+	</annotation>
+	<!--Global Data Type belongs to the namespace tns-->
+	<complexType name="CodeType">
+		<sequence>
+			<element name="code" type="string" minOccurs="0"/>
+			<element name="description" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="ProductTypeType">
+		<sequence>
+			<element name="productTypeCode" type="string" minOccurs="0"/>
+			<element name="ProductSubTypeCode" type="tns:ProductSubTypeType" minOccurs="0"/>
+			<element name="ProductDescriptionCategory" type="tns:ProductDescriptionCategoryType" minOccurs="0" maxOccurs="999"/>
+		</sequence>
+	</complexType>
+	<complexType name="ProductDescriptionCategoryType">
+		<sequence>
+			<element name="descriptionText" type="string" minOccurs="0"/>
+			<element name="ProductDescriptionCategoryOption" type="tns:ProductDescriptionCategoryOptionType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="ReferenceType">
+		<sequence>
+			<element name="sourceName" type="string" minOccurs="0"/>
+			<element name="referenceName" type="string" minOccurs="0"/>
+			<element name="referenceValue" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="NameValueType">
+		<sequence>
+			<element name="elementCode" type="string" minOccurs="0"/>
+			<element name="elementName" type="string" minOccurs="0"/>
+			<element name="elementValue" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<!--New Phone complexType which can be addressed as WorkPhone, HomePhone, Fax, etc.-->
+	<complexType name="PhoneType">
+		<sequence>
+			<element name="phoneTypeType" type="string" minOccurs="0" maxOccurs="999"/>
+			<element name="internationalAccessCode" type="string" minOccurs="0"/>
+			<element name="countryCode" type="string" minOccurs="0"/>
+			<element name="cityCode" type="string" minOccurs="0"/>
+			<element name="areaCode" type="string" minOccurs="0"/>
+			<element name="phoneNumber" type="string" minOccurs="0"/>
+			<element name="extension" type="string" minOccurs="0"/>
+			<element name="unlistedIndicator" type="boolean" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="EmailType">
+		<sequence>
+			<element name="emailTypeType" type="string" minOccurs="0" maxOccurs="999"/>
+			<element name="emailAddressText" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="ProcessingInformationType">
+		<sequence>
+			<!--More elements to appear-->
+			<element name="NewBusinessRatingProcess" type="tns:RatingProcessType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<simpleType name="ProductDescriptionCategoryOptionType">
+		<restriction base="string">
+			<enumeration value="FRCOVCODE"/>
+			<enumeration value="FRCOVDESC"/>
+			<enumeration value="MARKETINGCSS"/>
+			<enumeration value="PRINTDEC"/>
+			<enumeration value="SISBROKLTCOV"/>
+			<enumeration value="SISFRMLTCOV"/>
+			<enumeration value="SISHLTHLTCOV"/>
+			<enumeration value="SISLIFEPLAN"/>
+			<enumeration value="SISLIFEPRODTYPE"/>
+			<enumeration value="SISLIFEPLANTYPE"/>
+			<enumeration value="SISPROPLTCOV"/>
+			<enumeration value="SISPROPFORM"/>
+			<enumeration value="SISPROPDS"/>
+			<enumeration value="SISAUTOLTCOV"/>
+			<enumeration value="SISAUTODS"/>
+			<enumeration value="CLCOVCODE"/>
+			<enumeration value="CLCOVDESC"/>
+			<enumeration value="AUTOSUMMARY"/>
+			<enumeration value="PRINTDECDS"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="RatingProcessType">
+		<restriction base="string">
+			<enumeration value="RPM"/>
+			<enumeration value="Default"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="ProductSubTypeType">
+		<restriction base="string">
+			<enumeration value="camper"/>
+			<enumeration value="nonowned"/>
+		</restriction>
+	</simpleType>
+	<complexType name="DateType">
+		<sequence>
+			<element name="dateName" type="string" minOccurs="0"/>
+			<element name="dateValue" type="date" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="CommentType">
+		<sequence>
+			<!--More elements to appear-->
+			<element name="commentTypeType" type="string" minOccurs="0"/>
+			<element name="comment" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<!--Geographic types-->
+	<complexType name="StateType">
+		<sequence>
+			<element name="fipsStateAlphaCode" type="string" minOccurs="0"/>
+			<element name="otherStateNumericCode" type="tns:NameValueType" minOccurs="0"/>
+			<element name="fipsStateNumericCode" type="int" minOccurs="0"/>
+			<element name="stateName" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="CountyType">
+		<sequence>
+			<element name="fipsCountyCode" type="int" minOccurs="0"/>
+			<element name="otherCountyCode" type="tns:NameValueType" minOccurs="0"/>
+			<element name="countyName" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<simpleType name="LongitudeIdentifier">
+		<restriction base="string">
+			<enumeration value="E"/>
+			<enumeration value="W"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="LatitudeIdentifier">
+		<restriction base="string">
+			<enumeration value="N"/>
+			<enumeration value="S"/>
+		</restriction>
+	</simpleType>
+	<complexType name="LongitudeLatitudeCoordinateType">
+		<sequence>
+			<element name="latitudeNorthSouthIdentifier" type="tns:LatitudeIdentifier" minOccurs="0"/>
+			<element name="latitudeNumber" type="int" minOccurs="0"/>
+			<element name="longitudeEastWestIdentifier" type="tns:LongitudeIdentifier" minOccurs="0"/>
+			<element name="longitudeNumber" type="int" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="CensusInfoType">
+		<sequence>
+			<element name="censusBlockGroupCode" type="string" minOccurs="0"/>
+			<element name="censusBlockMDCode" type="string" minOccurs="0"/>
+			<element name="censusTractNumber" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<!--Global Data Type belongs to the namespace tns-->
+</schema>

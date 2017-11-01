@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schema.amfam.com/domain/producer" targetNamespace="http://schema.amfam.com/domain/producer" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<annotation>
+		<documentation>This schema defines a Producer</documentation>
+	</annotation>
+	<element name="Producer" type="tns:ProducerType"/>
+	<complexType name="ProducerType">
+		<sequence>
+			<element name="producerId" type="long" minOccurs="1" maxOccurs="1"/>
+			<element name="producerPartyId" type="long" minOccurs="1" maxOccurs="1"/>
+			<element name="ProducerName" type="tns:ProducerNameType" minOccurs="0" maxOccurs="1"/>
+			<element name="Gender" type="tns:GenderEnum" minOccurs="0" maxOccurs="1"/>
+			<element name="dateOfBirth" type="date" minOccurs="0" maxOccurs="1"/>
+			<element name="MaritalStatus" type="tns:MaritalStatusEnum" minOccurs="0" maxOccurs="1"/>
+			<element name="Ethnicity" type="tns:EthnicityEnum" minOccurs="0" maxOccurs="1"/>
+			<element name="nationalOrigin" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="npn" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="selectStatus" type="boolean" minOccurs="0" maxOccurs="1"/>
+			<element name="assessmentScore" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="assessmentType" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="assessmentRecommendation" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="retirementNoticeReceivedDate" type="date" minOccurs="0" maxOccurs="1"/>
+			<element name="retirementEffectiveDate" type="date" minOccurs="0" maxOccurs="1"/>
+			<element name="Status" type="tns:StatusType" minOccurs="0" maxOccurs="1"/>
+			<element name="Address" type="tns:ContactType" minOccurs="0" maxOccurs="999"/>
+			<element name="Hierarchy" type="tns:HierarchyType" minOccurs="0" maxOccurs="999"/>
+			<element name="PracticeLiability" type="tns:PracticeLiabilityType" minOccurs="0" maxOccurs="999"/>
+			<element name="StaffAgreement" type="tns:StaffAgreementType" minOccurs="0" maxOccurs="999"/>
+			<element name="Relationship" type="tns:RelationshipType" minOccurs="0" maxOccurs="999"/>
+			<element name="ProfessionalDesignation" type="tns:ProfessionalDesignationType" minOccurs="0" maxOccurs="999"/>
+			<element name="Contract" type="tns:ContractType" minOccurs="0" maxOccurs="999"/>
+			<element name="Endorsement" type="tns:EndorsementType" minOccurs="0" maxOccurs="999"/>
+			<element name="ContinuingEducation" type="tns:ContinuingEducationType" minOccurs="0" maxOccurs="999"/>
+			<element name="License" type="tns:LicenseType" minOccurs="0" maxOccurs="999"/>
+			<element name="Appointment" type="tns:AppointmentType" minOccurs="0" maxOccurs="999"/>
+			<element name="Background" type="tns:BackgroundType" minOccurs="0" maxOccurs="999"/>
+			<element name="Url" type="tns:UrlType" minOccurs="0" maxOccurs="999"/>
+			<element name="Date" type="tns:DateType" minOccurs="0" maxOccurs="999"/>
+			<element name="userIdCorp" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="userIdField" type="string" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="ProducerNameType">
+		<choice>
+			<element name="PersonName" type="tns:PersonNameType"/>
+			<element name="orgName" type="string"/>
+		</choice>
+	</complexType>
+	<complexType name="PersonNameType">
+		<sequence>
+			<element name="title" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="firstName" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="middleName" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="lastName" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="suffix" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="alternateLastName" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="nickName" type="string" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="ContactType">
+		<sequence>
+			<element name="ContactUsage" type="tns:ContactUsageEnumType" minOccurs="1" maxOccurs="1"/>
+			<element name="ContactType" type="tns:ContactTypeEnumType" minOccurs="1" maxOccurs="1"/>
+			<element name="communicationModeToTryFirst" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="streetAddressLine1" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="streetAddressLine2" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="streetAddressLine3" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="city" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="state" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="country" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="zipFirstFive" type="string" minOccurs="0"/>
+			<element name="zipLastFour" type="string" minOccurs="0"/>
+			<element name="phoneNumber" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="secondaryPhoneNumber" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="mobilePhoneNumber" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="faxNumber" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="pagerNumber" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="tollFreeNumber" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="email" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="startDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="endDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="OfficeHour" type="tns:OfficeHourType" minOccurs="0" maxOccurs="999"/>
+		</sequence>
+	</complexType>
+	<complexType name="HierarchyType">
+		<sequence>
+			<element name="ChildPosition" type="tns:PositionType" minOccurs="1" maxOccurs="1"/>
+			<element name="ParentPosition" type="tns:PositionType" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="PositionType">
+		<sequence>
+			<element name="producerId" type="long" minOccurs="1" maxOccurs="1"/>
+			<element name="producerPartyId" type="long" minOccurs="1" maxOccurs="1"/>
+			<element name="userId" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="positionHolderName" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="positionType" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="positionHolderType" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="startDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="endDate" type="date" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="PracticeLiabilityType">
+		<sequence>
+			<element name="PolicyType" type="tns:PolicyTypeEnum" minOccurs="1" maxOccurs="1"/>
+			<element name="planCode" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="jurisdiction" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="applicationSignDate" type="date" minOccurs="0" maxOccurs="1"/>
+			<element name="carrier" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="policyNumber" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="certificateNumber" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="claimLimit" type="double" minOccurs="1" maxOccurs="1"/>
+			<element name="exceptionFromUnderwriting" type="boolean" minOccurs="1" maxOccurs="1"/>
+			<element name="status" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="statusReason" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="effectiveDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="expiryDate" type="date" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="StaffAgreementType">
+		<sequence>
+			<element name="staffProducerId" type="long" minOccurs="1" maxOccurs="1"/>
+			<element name="staffProducerPartyId" type="long" minOccurs="1" maxOccurs="1"/>
+			<element name="staffName" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="relatedToAgent" type="boolean" minOccurs="1" maxOccurs="1"/>
+			<element name="staffAgreementType" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="startDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="endDate" type="date" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="RelationshipType">
+		<sequence>
+			<element name="producerId" type="long" minOccurs="1" maxOccurs="1"/>
+			<element name="producerPartyId" type="long" minOccurs="1" maxOccurs="1"/>
+			<element name="producerName" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="relationshipType" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="startDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="endDate" type="date" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="ProfessionalDesignationType">
+		<sequence>
+			<element name="designationType" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="designationSubType" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="startDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="endDate" type="date" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="ContractType">
+		<sequence>
+			<element name="contractType" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="startDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="endDate" type="date" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="EndorsementType">
+		<sequence>
+			<element name="endorsement" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="startDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="endDate" type="date" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="StatusType">
+		<sequence>
+			<element name="status" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="reason" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="startDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="endDate" type="date" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="ContinuingEducationType">
+		<sequence>
+			<element name="element" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="course" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="source" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="status" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="startDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="completionDate" type="date" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="LicenseType">
+		<sequence>
+			<element name="jurisdiction" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="subJurisdiction" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="resident" type="boolean" minOccurs="1" maxOccurs="1"/>
+			<element name="licenseCategory" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="licenseClass" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="licenseType" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="licenseId" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="nameOnLicense" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="doingBusinessAs" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="status" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="statusReason" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="effectiveDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="expiryDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="originalIssueDate" type="date" minOccurs="0" maxOccurs="1"/>
+			<element name="renewalDate" type="date" minOccurs="0" maxOccurs="1"/>
+			<element name="LicenseLine" type="tns:LicenseLineType" minOccurs="0" maxOccurs="999"/>
+		</sequence>
+	</complexType>
+	<complexType name="LicenseLineType">
+		<sequence>
+			<element name="line" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="status" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="statusReason" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="effectiveDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="expiryDate" type="date" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="AppointmentType">
+		<sequence>
+			<element name="jurisdiction" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="subJurisdiction" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="company" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="line" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="blanketStatusGrant" type="boolean" minOccurs="1" maxOccurs="1"/>
+			<element name="status" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="statusReason" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="effectiveDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="expiryDate" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="renewalDate" type="date" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="OfficeHourType">
+		<sequence>
+			<element name="description" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="openTime" type="string" minOccurs="0" maxOccurs="1"/>
+			<element name="closeTime" type="string" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="BackgroundType">
+		<sequence>
+			<element name="description" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="text" type="string" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="UrlType">
+		<sequence>
+			<element name="description" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="url" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="display" type="boolean" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="DateType">
+		<sequence>
+			<element name="description" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="date" type="date" minOccurs="1" maxOccurs="1"/>
+			<element name="display" type="boolean" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<simpleType name="GenderEnum">
+		<restriction base="string">
+			<enumeration value="UNKNOWN"/>
+			<enumeration value="MALE"/>
+			<enumeration value="FEMALE"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="MaritalStatusEnum">
+		<restriction base="string">
+			<enumeration value="UNKNOWN"/>
+			<enumeration value="SINGLE"/>
+			<enumeration value="MARRIED"/>
+			<enumeration value="DIVORCED"/>
+			<enumeration value="WIDOWED"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="EthnicityEnum">
+		<restriction base="string">
+			<enumeration value="NOT_SPECIFIED"/>
+			<enumeration value="AMERICAN_INDIAN_ALASKA_NATIVE"/>
+			<enumeration value="ASIAN"/>
+			<enumeration value="BLACK_AFRICAN_AMERICAN"/>
+			<enumeration value="HISPANIC_LATINO"/>
+			<enumeration value="NATIVE_HAWAIIAN_OTHER_PACIFIC_ISLANDER"/>
+			<enumeration value="WHITE"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="PolicyTypeEnum">
+		<restriction base="string">
+			<enumeration value="EO"/>
+			<enumeration value="EPL"/>
+			<enumeration value="SURETY_BOND"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="ContactUsageEnumType">
+		<restriction base="string">
+			<enumeration value="BANKED_AGENCY"/>
+			<enumeration value="EMAIL"/>
+			<enumeration value="RESIDENCE_ADDRESS"/>
+			<enumeration value="LICENSING_INFORMATION"/>
+			<enumeration value="LOCATION_MAILING_ADDRESS"/>
+			<enumeration value="LOCATION_PHYSICAL_ADDRESS"/>
+			<enumeration value="MAILING"/>
+			<enumeration value="MARKETING_INFORMATION"/>
+			<enumeration value="PRIMARY"/>
+			<enumeration value="RETIRED_PRIMARY"/>
+			<enumeration value="SATELLITE_1"/>
+			<enumeration value="SATELLITE_1_PO_BOX"/>
+			<enumeration value="SATELLITE_2"/>
+			<enumeration value="SATELLITE_2_PO_BOX"/>
+			<enumeration value="SATELLITE_3"/>
+			<enumeration value="SATELLITE_3_PO_BOX"/>
+			<enumeration value="SATELLITE_4"/>
+			<enumeration value="SATELLITE_4_PO_BOX"/>
+			<enumeration value="SATELLITE_5"/>
+			<enumeration value="SATELLITE_5_PO_BOX"/>
+			<enumeration value="SETTLEMENT"/>
+			<enumeration value="STATEMENTS"/>
+			<enumeration value="WORK_ADDRESS"/>
+			<enumeration value="WORK_ADDRESS_PO_BOX"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="ContactTypeEnumType">
+		<restriction base="string">
+			<enumeration value="RESIDENCE_ADDRESS"/>
+			<enumeration value="WORK_ADDRESS"/>
+			<enumeration value="WORK_ADDRESS_PO_BOX"/>
+			<enumeration value="LOCATION_PHYSICAL_ADDRESS"/>
+			<enumeration value="LOCATION_MAILING_ADDRESS"/>
+			<enumeration value="SATELLITE_1_ADDRESS"/>
+			<enumeration value="SATELLITE_1_PO_BOX_ADDRESS"/>
+			<enumeration value="SATELLITE_2_ADDRESS"/>
+			<enumeration value="SATELLITE_2_PO_BOX_ADDRESS"/>
+			<enumeration value="SATELLITE_3_ADDRESS"/>
+			<enumeration value="SATELLITE_3_PO_BOX_ADDRESS"/>
+			<enumeration value="SATELLITE_4_ADDRESS"/>
+			<enumeration value="SATELLITE_4_PO_BOX_ADDRESS"/>
+			<enumeration value="SATELLITE_5_ADDRESS"/>
+			<enumeration value="SATELLITE_5_PO_BOX_ADDRESS"/>
+			<enumeration value="EMAIL"/>
+			<enumeration value="BANKED_AGENCY"/>
+		</restriction>
+	</simpleType>
+</schema>

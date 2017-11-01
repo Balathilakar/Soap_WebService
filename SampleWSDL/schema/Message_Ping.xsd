@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:ping="http://schema.amfam.com/ping" xmlns:tns="http://schema.amfam.com/ping" attributeFormDefault="qualified" elementFormDefault="qualified" jaxb:version="2.0" targetNamespace="http://schema.amfam.com/ping">
+	<annotation>
+		<documentation xml:lang="en">
+			This schema defines the structure of Ping message types
+		</documentation>
+	</annotation>
+	<include schemaLocation="./Automation_Ping.xsd"/>
+	<element name="ping">
+		<complexType>
+			<sequence>
+				<element name="PingInput" type="ping:PingInputType"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForPingSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForPingSchema"/>
+		</complexType>
+	</element>
+	<element name="pingResponse">
+		<complexType>
+			<sequence>
+				<element name="PingResult" type="ping:PingResultType"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForPingSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForPingSchema"/>
+		</complexType>
+	</element>
+	<attributeGroup name="AutomationVersionAttributesForPingSchema">
+		<annotation>
+			<documentation>
+				Attribute definitions for the ping automation schema version info
+			</documentation>
+		</annotation>
+		<attribute fixed="CVS" name="automationSchemaSourceTool" type="string" use="required">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+		<attribute fixed="svcartfct" name="automationSchemaProject" type="string" use="required">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+		<attribute fixed="Ping12022009" name="automationSchemaVersion" type="string" use="required">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<attributeGroup name="ServiceVersionAttributesForPingSchema">
+		<annotation>
+			<documentation>
+				Attribute definitions for the ping service version info - each project reusing this
+				messaging schema needs to edit this file and supply constant values for their
+				specific service implementation, such as a 'fixed="9.9"' attribute
+			</documentation>
+		</annotation>
+		<attribute fixed="harvest" name="serviceSourceTool" type="string" use="required">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+		<attribute fixed="producerservice" name="serviceProject" type="string" use="required">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+		<attribute fixed="1.0" name="serviceVersion" type="string" use="required">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+</schema>

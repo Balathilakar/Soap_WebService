@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2011 (http://www.altova.com) by dms074 (American Family Insurance) -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:automation="http://service.amfam.com/automation/producerhierarchyservice" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:tns="http://service.amfam.com/message/producerhierarchyservice" targetNamespace="http://service.amfam.com/message/producerhierarchyservice" elementFormDefault="qualified" attributeFormDefault="qualified" jaxb:version="2.0">
+	<import namespace="http://service.amfam.com/automation/producerhierarchyservice" schemaLocation="Automation_ProducerHierarchyService.xsd"/>
+	<element name="retrieveProducerHierarchyStructure">
+		<complexType>
+			<sequence>
+				<element ref="automation:RetrieveProducerHierarchyStructureInput"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForProducerHierarchyServiceSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForProducerHierarchyServiceSchema"/>
+		</complexType>
+	</element>
+	<element name="retrieveProducerHierarchyStructureResponse">
+		<complexType>
+			<sequence>
+				<element ref="automation:RetrieveProducerHierarchyStructureResult"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForProducerHierarchyServiceSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForProducerHierarchyServiceSchema"/>
+		</complexType>
+	</element>
+	<element name="retrieveStaff">
+		<complexType>
+			<sequence>
+				<element ref="automation:RetrieveStaffInput"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForProducerHierarchyServiceSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForProducerHierarchyServiceSchema"/>
+		</complexType>
+	</element>
+	<element name="retrieveStaffResponse">
+		<complexType>
+			<sequence>
+				<element ref="automation:RetrieveStaffResult"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForProducerHierarchyServiceSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForProducerHierarchyServiceSchema"/>
+		</complexType>
+	</element>
+	<element name="retrieveBookOfBusiness">
+		<complexType>
+			<sequence>
+				<element ref="automation:RetrieveBookOfBusinessInput"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForProducerHierarchyServiceSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForProducerHierarchyServiceSchema"/>
+		</complexType>
+	</element>
+	<element name="retrieveBookOfBusinessResponse">
+		<complexType>
+			<sequence>
+				<element ref="automation:RetrieveBookOfBusinessResult"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForProducerHierarchyServiceSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForProducerHierarchyServiceSchema"/>
+		</complexType>
+	</element>
+	<element name="hasBookOfBusiness">
+		<complexType>
+			<sequence>
+				<element ref="automation:HasBookOfBusinessInput"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForProducerHierarchyServiceSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForProducerHierarchyServiceSchema"/>
+		</complexType>
+	</element>
+	<element name="hasBookOfBusinessResponse">
+		<complexType>
+			<sequence>
+				<element ref="automation:HasBookOfBusinessResult"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForProducerHierarchyServiceSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForProducerHierarchyServiceSchema"/>
+		</complexType>
+	</element>
+	<element name="producerHierarchyServiceFault">
+		<complexType>
+			<sequence>
+				<element ref="automation:ServiceFaultData"/>
+			</sequence>
+			<attributeGroup ref="tns:AutomationVersionAttributesForProducerHierarchyServiceSchema"/>
+			<attributeGroup ref="tns:ServiceVersionAttributesForProducerHierarchyServiceSchema"/>
+		</complexType>
+	</element>
+	<attributeGroup name="AutomationVersionAttributesForProducerHierarchyServiceSchema">
+		<attribute name="automationSchemaSourceTool" type="string" use="required" fixed="CVS">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+		<attribute name="automationSchemaProject" type="string" use="required" fixed="producerhierarchyservice">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+		<attribute name="automationSchemaVersion" type="string" use="required" fixed="1.0">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<attributeGroup name="ServiceVersionAttributesForProducerHierarchyServiceSchema">
+		<attribute name="serviceSourceTool" type="string" use="required" fixed="CVS">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+		<attribute name="serviceProject" type="string" use="required" fixed="producerhierarchyservice">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+		<attribute name="serviceVersion" type="string" use="required" fixed="1.0">
+			<annotation>
+				<appinfo>
+					<jaxb:property fixedAttributeAsConstantProperty="true"/>
+				</appinfo>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+</schema>

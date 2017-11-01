@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:domain="http://schema.amfam.com/domain/producer" xmlns:enterpriseType="http://schema.amfam.com/xsd/enterpriseType/v1" xmlns:tns="http://service.amfam.com/automation/producerhierarchyservice" targetNamespace="http://service.amfam.com/automation/producerhierarchyservice" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<import namespace="http://schema.amfam.com/xsd/enterpriseType/v1" schemaLocation="Enterprise_EnterpriseType.xsd"/>
+	<import namespace="http://schema.amfam.com/domain/producer" schemaLocation="producer.xsd"/>
+	<!-- root elements -->
+	<element name="RetrieveProducerHierarchyStructureInput" type="tns:RetrieveProducerHierarchyStructureInputType"/>
+	<element name="RetrieveProducerHierarchyStructureResult" type="tns:RetrieveProducerHierarchyStructureResultType"/>
+	<element name="HasBookOfBusinessInput" type="tns:HasBookOfBusinessInputType"/>
+	<element name="HasBookOfBusinessResult" type="tns:HasBookOfBusinessResultType"/>
+	<element name="RetrieveBookOfBusinessInput" type="tns:RetrieveBookOfBusinessInputType"/>
+	<element name="RetrieveBookOfBusinessResult" type="tns:RetrieveBookOfBusinessResultType"/>
+	<element name="RetrieveStaffInput" type="tns:RetrieveStaffInputType"/>
+	<element name="RetrieveStaffResult" type="tns:RetrieveStaffResultType"/>
+	<element name="ServiceFaultData" type="tns:ServiceFaultDataType"/>
+	<!-- retrieveProducerHierarchyStructure request -->
+	<complexType name="RetrieveProducerHierarchyStructureInputType">
+		<sequence>
+			<element name="SearchCriteria" type="tns:SearchCriteriaType" maxOccurs="100"/>
+			<element name="Audit" type="tns:AuditType"/>
+		</sequence>
+	</complexType>
+	<complexType name="SearchCriteriaType">
+		<sequence>
+			<element name="salesRegionCode" type="string" minOccurs="0"/>
+			<element name="salesStateCode" type="string" minOccurs="0"/>
+			<element name="districtCode" type="string" minOccurs="0"/>
+			<element name="effectiveDate" type="date" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<!-- retrieveProducerHierarchyStructure response -->
+	<complexType name="RetrieveProducerHierarchyStructureResultType">
+		<sequence>
+			<element name="MessageInfo" type="tns:MessageInfoType" minOccurs="0" maxOccurs="999"/>
+			<element name="EnterpriseSalesOrganization" type="tns:EnterpriseSalesOrganizationType" minOccurs="0" maxOccurs="1000"/>
+		</sequence>
+	</complexType>
+	<complexType name="EnterpriseSalesOrganizationType">
+		<sequence>
+			<element name="salesRegion" type="tns:SalesRegionType" minOccurs="0" maxOccurs="1000"/>
+		</sequence>
+	</complexType>
+	<complexType name="SalesRegionType">
+		<sequence>
+			<element name="otherSalesRegionDates" type="enterpriseType:DateType" minOccurs="0" maxOccurs="1000"/>
+			<element name="salesRegionCode" type="string" minOccurs="0"/>
+			<element name="salesRegionShortName" type="string" minOccurs="0"/>
+			<element name="salesRegionName" type="string" minOccurs="0"/>
+			<element name="salesRegionStatus" type="tns:ActiveStatusIndicator" minOccurs="0"/>
+			<element name="salesState" type="tns:SalesStateType" minOccurs="0" maxOccurs="1000"/>
+		</sequence>
+	</complexType>
+	<complexType name="SalesStateType">
+		<sequence>
+			<element name="otherSalesStateDates" type="enterpriseType:DateType" minOccurs="0" maxOccurs="1000"/>
+			<element name="salesStateCode" type="string" minOccurs="0"/>
+			<element name="salesStateShortName" type="string" minOccurs="0"/>
+			<element name="salesStateName" type="string" minOccurs="0"/>
+			<element name="salesStateStatus" type="tns:ActiveStatusIndicator" minOccurs="0"/>
+			<element name="salesStateProcessCenter" type="tns:ProcessingCenter" minOccurs="0"/>
+			<element name="salesStateBudgetCode" type="int" minOccurs="0"/>
+			<element name="salesDistrict" type="tns:SalesDistrictType" minOccurs="0" maxOccurs="1000"/>
+		</sequence>
+	</complexType>
+	<complexType name="SalesDistrictType">
+		<sequence>
+			<element name="otherDistrictDates" type="enterpriseType:DateType" minOccurs="0" maxOccurs="1000"/>
+			<element name="salesDistrictCode" type="string" minOccurs="0"/>
+			<element name="SalesDistrictStatus" type="tns:ActiveStatusIndicator" minOccurs="0"/>
+			<element name="salesDistrictState" type="enterpriseType:StateType" minOccurs="0"/>
+			<element name="districtType" type="tns:TypeOfDistrict" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="ProcessingCenter">
+		<sequence>
+			<element name="processingCenterCode" type="tns:ProcessingCenterCodeType" minOccurs="0"/>
+			<element name="processingCenterName" type="tns:ProcessingCenterNameType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<!-- retrieveStaff request -->
+	<complexType name="RetrieveStaffInputType">
+		<sequence>
+			<choice>
+				<element name="managerUserIdField" type="string"/>
+				<element name="managerUserIdCorp" type="string"/>
+				<element name="managerProducerId" type="long"/>
+				<element name="managerProducerPartyId" type="long"/>
+				<element name="Agency" type="tns:BookOfBusinessAgencyType"/>
+			</choice>
+			<element name="Audit" type="tns:AuditType"/>
+		</sequence>
+	</complexType>
+	<!-- retrieveStaff response -->
+	<complexType name="RetrieveStaffResultType">
+		<sequence>
+			<element name="MessageInfo" type="tns:MessageInfoType" minOccurs="0" maxOccurs="999"/>
+			<element name="RetrieveStaffResponse" type="tns:RetrieveStaffType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="RetrieveStaffType">
+		<sequence>
+			<element name="Agency" type="tns:BookOfBusinessAgencyType" minOccurs="0"/>
+			<element name="StaffProducer" type="tns:ProducerIdentifierType" maxOccurs="10000"/>
+		</sequence>
+	</complexType>
+	<!-- retrieveBookOfBusiness request -->
+	<complexType name="RetrieveBookOfBusinessInputType">
+		<sequence>
+			<element name="SearchCriteria" type="tns:RetrieveBookOfBusinessCriteriaType" maxOccurs="100"/>
+			<element name="LevelOfDetail" type="tns:LevelOfDetailEnum"  minOccurs="0" maxOccurs="999"/>
+			<element name="Audit" type="tns:AuditType"/>
+		</sequence>
+	</complexType>
+	<complexType name="RetrieveBookOfBusinessCriteriaType">
+		<choice>
+			<element name="userIdField" type="string"/>
+			<element name="userIdCorp" type="string"/>
+			<element name="producerId" type="long"/>
+			<element name="producerPartyId" type="long"/>
+		</choice>
+	</complexType>
+	<!-- retrieveBookOfBusiness response -->
+	<complexType name="RetrieveBookOfBusinessResultType">
+		<sequence>
+			<element name="MessageInfo" type="tns:MessageInfoType" minOccurs="0" maxOccurs="999"/>
+			<element name="RetrieveBookOfBusinessResponse" type="tns:RetrieveBookOfBusinessType" maxOccurs="100"/>
+		</sequence>
+	</complexType>
+	<complexType name="RetrieveBookOfBusinessType">
+		<sequence>
+			<element name="BookOfBusinessAgencies" type="tns:BookOfBusinessAgencyType" minOccurs="0" maxOccurs="10000"/>
+			<element name="isASM" type="boolean" default="false"/>
+			<element name="districtCode" type="string" minOccurs="0"/>
+			<element name="RetrieveBookOfBusinessCriteria" type="tns:RetrieveBookOfBusinessCriteriaType"/>
+		</sequence>
+	</complexType>
+	<!-- HasBookOfBusiness request -->
+	<complexType name="HasBookOfBusinessInputType">
+		<sequence>
+			<element name="SearchCriteria" type="tns:HasBookOfBusinessCriteriaType" minOccurs="0"/>
+			<element name="Audit" type="tns:AuditType"/>
+		</sequence>
+	</complexType>
+	<complexType name="HasBookOfBusinessCriteriaType">
+		<sequence>
+			<choice>
+				<element name="userIdField" type="string"/>
+				<element name="userIdCorp" type="string"/>
+				<element name="producerId" type="long"/>
+				<element name="producerPartyId" type="long"/>
+			</choice>
+			<element name="BookOfBusinessAgencies" type="tns:BookOfBusinessAgencyType"/>
+		</sequence>
+	</complexType>
+	<!-- HasBookOfBusiness response -->
+	<complexType name="HasBookOfBusinessResultType">
+		<sequence>
+			<element name="MessageInfo" type="tns:MessageInfoType" minOccurs="0" maxOccurs="999"/>
+			<element name="hasBookOfBusiness" type="boolean"/>
+		</sequence>
+	</complexType>
+	<!-- common -->
+	<complexType name="BookOfBusinessAgencyType">
+		<sequence>
+			<element name="agencyPartyId" type="long" minOccurs="0"/>
+			<element name="primaryProducerId" type="long" minOccurs="0"/>
+			<element name="primaryProducerPartyId" type="long" minOccurs="0"/>
+			<element name="districtCode" type="string" minOccurs="0"/>
+			<element name="storefront" type="boolean" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	<complexType name="ProducerIdentifierType">
+		<sequence>
+			<element name="producerId" type="long"/>
+			<element name="producerPartyId" type="long"/>
+			<element name="positionType" type="string"/>
+			<element name="userIdField" type="string" minOccurs="0"/>
+			<element name="userIdCorp" type="string" minOccurs="0"/>
+			<element name="Name" type="domain:ProducerNameType"/>
+		</sequence>
+	</complexType>
+	<complexType name="AuditType">
+		<sequence>
+			<element name="userId" type="string"/>
+			<element name="systemName" type="string"/>
+		</sequence>
+	</complexType>
+	<complexType name="MessageInfoType">
+		<sequence>
+			<element name="code" type="string"/>
+			<element name="messageDescription" type="string"/>
+			<element name="MessageType" type="tns:MessageTypeEnum"/>
+		</sequence>
+	</complexType>
+	<!-- Enumerations -->
+	<simpleType name="TypeOfDistrict">
+		<restriction base="string">
+			<enumeration value="Standard"/>
+			<enumeration value="High Risk"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="ActiveStatusIndicator">
+		<restriction base="string">
+			<enumeration value="Active"/>
+			<enumeration value="Inactive"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="ProcessingCenterCodeType">
+		<restriction base="string">
+			<enumeration value="WI"/>
+			<enumeration value="MO"/>
+			<enumeration value="CO"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="ProcessingCenterNameType">
+		<restriction base="string">
+			<enumeration value="Wisconsin"/>
+			<enumeration value="Missouri"/>
+			<enumeration value="Colorado"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="MessageTypeEnum">
+		<restriction base="string">
+			<enumeration value="INFO"/>
+			<enumeration value="WARNING"/>
+			<enumeration value="ERROR"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="LevelOfDetailEnum">
+		<restriction base="string">
+			<enumeration value="STOREFRONT_INDICATOR"/>
+		</restriction>
+	</simpleType>
+	<!-- Fault -->
+	<complexType name="ServiceFaultDataType">
+		<sequence>
+			<element name="Message" type="tns:MessageInfoType" minOccurs="0" maxOccurs="999"/>
+		</sequence>
+	</complexType>
+</schema>
